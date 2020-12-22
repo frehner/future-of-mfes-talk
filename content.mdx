@@ -1,0 +1,133 @@
+import babelImg from "./static/babel.png";
+import holdIt from "./static/hold-it.webp";
+import confusedScreaming from "./static/confused-screaming.jpg";
+
+# The Future of MicroFrontends (MFEs)
+
+<Aside>Or, how the future of the web isn't that different than MFEs</Aside>
+
+---
+
+# Who are you??
+
+<Appear>
+<br/>
+
+### What I do
+
+- single-spa Core Maintainer
+- Frontend Architect
+- Open source contributor
+
+<!--
+  e.g. react-router, web-platform-tests, CSSWG proposals, react-fast-refresh-webpack-plugin, etc.
+-->
+
+</Appear>
+
+<Appear>
+<br/>
+
+### Find me
+
+- Anthony Frehner
+- Github: `frehner`
+- Twitter: `@aahfrena`
+
+</Appear>
+
+---
+
+# History
+
+<Aside>To know where you're going, you need to know where you came from</Aside>
+
+<br />
+
+- Does anyone right now write `require` statements for frontend JS code?
+- <Appear>
+    Does anyone right now use a script tag in gulp/grunt compiled JS?
+  </Appear>
+- <Appear>
+    Does anyone right now just write JS directly in an HTML file's script tag?
+  </Appear>
+
+---
+
+# `import` is the standard now
+
+Everyone's doing it
+
+<br />
+
+<Appear>
+  <img src={holdIt} alt="Hold It!" width="500" />
+</Appear>
+
+---
+
+# Digging deeper...
+
+<br />
+
+Let's take a look at
+
+<a
+  target="_blank"
+  href="https://babeljs.io/en/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20&build=&builtIns=false&spec=false&loose=false&code_lz=MYewdgzgLgBFCmBbADjAvDA5ACwJaaA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=true&targets=&version=7.12.11&externalPlugins="
+>
+  <img src={babelImg} alt="Babel JS logo" width="175" />
+</a>
+
+---
+
+# What's stopping us from using `import`?
+
+<!--
+  If we're using require under the hood...
+  What makes import better than require?
+  Why was there a big shift to use import when require was already working (and is still working)?
+  Especially when require still works great in places like NodeJS, where import was only recently (2-ish months ago) released?
+-->
+
+<br />
+
+- Browser support?
+- NodeJS?
+- Idealogical wars?
+
+<!--
+  It's actually something much more boring than that. But let's pause here and come back in a minute:
+-->
+
+---
+
+# Hypothetically...
+
+## Could we have just used `require` in the browser?
+
+<br />
+<Aside>Couldn't be that simple, could it?</Aside>
+
+<!--
+  require is a blocking call - it would block navigation, user input, etc while waiting for that code to be downloaded. a web browser can’t afford to do that
+-->
+
+---
+
+# Have you seen the problem?
+
+If we aren't using `import`, and we can't use `require`...
+
+<br />
+<Appear>
+WHAT ACTUALLY HAPPENS?
+
+<img src={confusedScreaming} alt="Confused Screaming" />
+</Appear>
+
+---
+
+## Thanks!
+
+[Back to beginning](/0)
