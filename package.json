@@ -8,7 +8,7 @@
     "start": "parcel -p 9999 index.html",
     "test": "node e2e/index.test.js --unhandled-rejections=strict"
   },
-  "author": "Carlos Filoteo",
+  "author": "Anthony Frehner",
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.9.0",

@@ -1,6 +1,7 @@
 import babelImg from "./static/babel.png";
 import holdIt from "./static/hold-it.webp";
 import confusedScreaming from "./static/confused-screaming.jpg";
+import yesJpeg from "./static/yes.jpeg";
 
 # The Future of MicroFrontends (MFEs)
 
@@ -81,6 +82,71 @@ Let's take a look at
 
 ---
 
+# So we're using `require` in the browser?
+
+<br />
+
+Couldn't be that simple, could it?
+
+<!--
+  require is a blocking call - it would block navigation, user input, etc while waiting for that code to be downloaded. a web browser can’t afford to do that
+-->
+
+---
+
+# Wait...
+
+If we aren't using `import`, and we can't use `require`...
+
+<br />
+<Appear>
+WHAT ACTUALLY HAPPENS?
+
+<img src={confusedScreaming} alt="Confused Screaming" />
+</Appear>
+
+---
+
+# Webpack's tranformation
+
+From
+
+```js
+import React from "react";
+```
+
+<br />
+
+To
+
+```js
+"./index.js": function(module, __webpack_exports__, __webpack_require__) {
+  "use strict";
+  __webpack_require__.r(__webpack_exports__)
+  __webpack_require__("./node_modules/react/index.js") // <-----
+},
+```
+
+<!--
+  There's actually a TON more code in that transformation, but that's just the one line we really want to focus on for now.
+-->
+
+---
+
+# Turtles all the way down
+
+So our code gets transformed
+
+<br />
+
+`import` -> `require` -> `webpack_require`
+
+<!--
+  All before it hits the browser. What we would hope would be running as highly-efficient, fast, performant platform-native code is transformed into non-standard JS code
+-->
+
+---
+
 # What's stopping us from using `import`?
 
 <!--
@@ -94,37 +160,44 @@ Let's take a look at
 
 - Browser support?
 - NodeJS?
-- Idealogical wars?
+- Inertia?
+
+---
+
+<img src={yesJpeg} alt="Yes" />
 
 <!--
-  It's actually something much more boring than that. But let's pause here and come back in a minute:
+  Browser support and NodeJS support are getting to the point that they won't be factors for much longer though
+  Inertia is probably going to be one of the hardest things to overcome, as it is in everything else
 -->
 
 ---
 
-# Hypothetically...
+# Great news
 
-## Could we have just used `require` in the browser?
+Inertia has recently shifted!
 
 <br />
-<Aside>Couldn't be that simple, could it?</Aside>
 
-<!--
-  require is a blocking call - it would block navigation, user input, etc while waiting for that code to be downloaded. a web browser can’t afford to do that
--->
+- <Appear>
+    <a href="https://github.com/vitejs/vite" target="_blank">
+      Vite (Vue)
+    </a>
+  </Appear>
+- <Appear>
+    <a href="https://www.snowpack.dev" target="_blank">
+      Snowpack
+    </a>
+  </Appear>
+- <Appear>
+    <a href="https://github.com/preactjs/wmr" target="_blank">
+      WMR (Preact)
+    </a>
+  </Appear>
 
 ---
 
-# Have you seen the problem?
-
-If we aren't using `import`, and we can't use `require`...
-
-<br />
-<Appear>
-WHAT ACTUALLY HAPPENS?
-
-<img src={confusedScreaming} alt="Confused Screaming" />
-</Appear>
+<Appear>But also, one other thing...</Appear>
 
 ---
 
