@@ -2,6 +2,9 @@ import babelImg from "./static/babel.png";
 import holdIt from "./static/hold-it.webp";
 import confusedScreaming from "./static/confused-screaming.jpg";
 import yesJpeg from "./static/yes.jpeg";
+import wellYesButNo from "./static/wellYesButNo.jpeg";
+import bearImport from "./static/bearImport.jpeg";
+import mfeTypes from "./static/mfe-types.jpeg";
 
 # The Future of MicroFrontends (MFEs)
 
@@ -112,7 +115,7 @@ WHAT ACTUALLY HAPPENS?
 From
 
 ```js
-import React from "react";
+require("react");
 ```
 
 <br />
@@ -143,6 +146,7 @@ So our code gets transformed
 
 <!--
   All before it hits the browser. What we would hope would be running as highly-efficient, fast, performant platform-native code is transformed into non-standard JS code
+  And to be clear, this is amazing - no sarcasm whatsoever. It's so cool that we can write modern code and have all these sweet tools transform it into something that works
 -->
 
 ---
@@ -164,40 +168,370 @@ So our code gets transformed
 
 ---
 
-<img src={yesJpeg} alt="Yes" />
+# Browser Support
+
+## <a href="https://caniuse.com/es6-module" target="_blank">92%</a>
+
+---
+
+# NodeJS
+
+## Version >= 13
+
+<br />
+<br />
+
+### Also Deno support :)
+
+---
+
+# Inertia
+
+<br />
+
+- <a href="https://github.com/vitejs/vite" target="_blank">
+    Vite (Vue)
+  </a>
+- <a href="https://www.snowpack.dev" target="_blank">
+    Snowpack
+  </a>
+- <a href="https://github.com/preactjs/wmr" target="_blank">
+    WMR (Preact)
+  </a>
+- <a href="https://jspm.org/" target="_blank">
+    JSPM
+  </a>
+
+---
+
+# So... we're ready, right?
+
+---
+
+<img
+  src={yesJpeg}
+  alt="A boy sitting in a chair, with a caption that says 'Yes'"
+/>
 
 <!--
-  Browser support and NodeJS support are getting to the point that they won't be factors for much longer though
-  Inertia is probably going to be one of the hardest things to overcome, as it is in everything else
+  if I were to summarize the status with one picture, I would summarize it would be this one
 -->
 
 ---
 
-# Great news
+<img
+  src={wellYesButNo}
+  alt="A pirate, with a caption that says 'Well yes, but actually no'"
+/>
 
-Inertia has recently shifted!
-
-<br />
-
-- <Appear>
-    <a href="https://github.com/vitejs/vite" target="_blank">
-      Vite (Vue)
-    </a>
-  </Appear>
-- <Appear>
-    <a href="https://www.snowpack.dev" target="_blank">
-      Snowpack
-    </a>
-  </Appear>
-- <Appear>
-    <a href="https://github.com/preactjs/wmr" target="_blank">
-      WMR (Preact)
-    </a>
-  </Appear>
+<!--
+  and if I were to summarize the status with two pictures, I would add this one
+  let's talk about what's stopping the progress, and how things are going
+-->
 
 ---
 
-<Appear>But also, one other thing...</Appear>
+# What's stopping us?
+
+<br />
+<Appear>
+
+### Bare import specifiers
+
+</Appear>
+
+---
+
+# Bare... what?
+
+<Appear>
+What's the difference between these two import statements?
+
+```js
+import Vue from "./vue";
+import Vue from "vue";
+```
+
+</Appear>
+
+<!--
+  the first one tells you exactly where the file for that import lives. It works in both a file-system (NodeJS) and a browser environment
+  the second one is a bare import statement - you don't tell the computer exactly where that module lives.
+
+  in Node, you can just assume "look in the node_modules folder for a package named 'react'"
+
+  in a broswer... it says "that's not a URL!" and it dies. browsers must have a URL where they can get things, they don't assume something is at a specific place
+-->
+
+---
+
+# Bare Import Specifiers
+
+```js
+import Vue from "vue";
+```
+
+<br />
+<br />
+
+<img
+  src={bearImport}
+  alt="A bear, with the text 'Bear Imports' below it"
+  style={{ height: "250px" }}
+/>
+
+<!--
+  so it's called 'bare' because it's not a full url
+  but the thing is, we have all of our source code written in the second one right?
+  and no one would want to have to go update all their source code to have full URLs in it
+-->
+
+---
+
+# Import Maps
+
+<!--
+  So that leads us to import maps. Import maps allow us to say "this bare import specifier MAPS to this URL"
+  and that gives us the best of both worlds. we can keep our clean and versionless import statements, but also make it work in browsers that need URLs
+  To update Vue, we just need to update that mapping url and suddenly all our code will now import from the updated version automatically
+-->
+
+---
+
+```json
+{
+  "import": {
+    "vue": "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.min.js"
+  }
+}
+```
+
+<!--
+  and it just works. the libraries that are already bundling to ESM format *cough React cough* don't need to make any other changes for this to work
+  and now we're also using the fast, efficient, beautiful ESM code built into browsers to resolve all our JS.
+-->
+
+---
+
+## Browser status for Import Maps
+
+- Chrome
+- Edge
+
+<!--
+  that's obviously not good enough for now. so
+-->
+
+---
+
+## Import map polyfill options:
+
+- <a href="https://github.com/systemjs/systemjs" target="_blank">
+    SystemJS
+  </a>
+- <a href="https://github.com/guybedford/es-module-shims" target="_blank">
+    ES-Module-Shims
+  </a>
+
+<!--
+  note: this solutions have their downsides as well! SystemJS still requires you to do some compilation in a bundler. but since almost everyone is already using bundlers to compile stuff, this doesn't actually count as a negative :D
+  es module shims has some performance issues due to how it rewrites things in the browser
+-->
+
+---
+
+## So... microfrontends (MFEs)?
+
+<!--
+  whew. we made it. believe it or not, that was the hardest part of understanding a certain type of MFE
+  what do I mean by certain type?
+-->
+
+---
+
+Luca Mezzalira: <a href="https://twitter.com/lucamezzalira" target="\_blank" style={{fontSize: '12px'}}>Twitter</a>
+
+<br />
+
+<img
+  src={mfeTypes}
+  alt="Shows three columns; each column relates to a specific type of 'Microfrontend (MFE) Composition'. Column one is 'Client-Side Composition' and shows MFEs being put together at the client/browser level. Column two shows 'Edge-Side Composition' with MFEs being composed at an Edge/CDN location. Column three shows 'Server-Side composition' with MFEs being assembled at the server/origin."
+/>
+<a
+  href="https://increment.com/frontend/micro-frontends-in-context/"
+  style={{ fontSize: "12px" }}
+>
+  Source article
+</a>
+
+<!--
+  The type of MFE that I am focusing on today is completely Clide-Side. We want to either fully utilize (or use polyfills) for browser standards and have MFEs tie it all together on the client.
+  This allows us to use those nice SPA frameworks while also doing microservice-y stuff. Let's dig in
+-->
+
+---
+
+## Remember Import Maps?
+
+<br />
+
+```js
+import Vue from "vue";
+```
+
+<br />
+
+```json
+{
+  "import": {
+    "vue": "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.min.js"
+  }
+}
+```
+
+<!--
+  It it simply mapping the 'vue' keyword to a URL, which happens to be a CDN location of a JS file
+-->
+
+---
+
+# You probably do this
+
+<br />
+
+```js
+import { Button } from "@company/styleguide";
+```
+
+<br />
+<Appear>
+
+But with an Import Map!
+
+```json
+{
+  "import": {
+    "@company/styleguide": "cdn.com/company/styleguide.js"
+  }
+}
+```
+
+</Appear>
+
+---
+
+# That's not so different
+
+...is it?
+
+<!--
+  You write your code the exact same way for the MFE setup as for a more traditional "create an NPM package for your styleguide" way
+  the difference is... it's now being downloaded and resolved in the browser - NOT by a bundler.
+
+  again, in the browser.
+-->
+
+---
+
+# ...So what?
+
+<!--
+  it may not seem like a big deal. and honestly it isn't! but that one change is what allows you to now do MFEs
+  it makes the dev experience better, and it makes updates to your apps faster.
+-->
+
+---
+
+## Update Process
+
+<br />
+
+Traditional NPM way:
+
+1. Update library code (code + PR)
+1. Publish new library version to npm
+1. Install new library version to app code
+1. Update app (PR)
+
+<br />
+
+<Appear>
+
+Import map way:
+
+1. Update library code (code + PR)
+1. Publish new library version to CDN
+1. Update import map
+
+</Appear>
+
+---
+
+## Dev Process
+
+<br />
+
+Traditional NPM way:
+
+1. Run app
+1. Run styleguide
+1. `yarn link` / `npm link` / `yalc link`
+
+<br />
+
+<Appear>
+
+Import map way:
+
+1. Run styleguide
+1. Change import map
+
+</Appear>
+
+---
+
+## Change import map?
+
+<Appear>
+
+```json
+{
+  "import": {
+    "@company/styleguide": "http://localhost:8080/main.js"
+  }
+}
+```
+
+</Appear>
+
+<!--
+  remember it's just a mapper from a bare import specifier to a url
+  and that url can be localhost if you need it to be!
+
+  you don't have to run the app at all if you don't need to, since its entry in the import map is still pointing at the CDN
+-->
+
+---
+
+# That's all there is to MFEs
+
+<br />
+
+- client-side MFEs
+- using import maps
+
+<!--
+  client-side composition of MFEs using import maps... really isn't that strange. or different. is it?
+  even better, doing it this way - it's an actual browser standard. by using import maps, you're "using the platform"
+
+  As opposed to webpack's module federation (which is good, btw, no shade here) - it's not a standard, and it only works in webpack
+
+  We want to be building on browser standards
+-->
+
+---
+
+# single-spa
 
 ---
 
