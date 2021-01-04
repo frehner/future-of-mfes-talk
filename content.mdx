@@ -448,10 +448,11 @@ But with an Import Map!
 
 Traditional NPM way:
 
-1. Update library code (code + PR)
-1. Publish new library version to npm
-1. Install new library version to app code
-1. Update app (PR)
+1. **Update library code (PR = manual work)**
+1. Publish new library version to npm (CI = automated)
+1. **Install new library version to app code (npm/yarn = manual work)**
+1. **Update app code (PR = manual work)**
+1. Deploy app (CI = automated)
 
 <br />
 
@@ -459,9 +460,9 @@ Traditional NPM way:
 
 Import map way:
 
-1. Update library code (code + PR)
-1. Publish new library version to CDN
-1. Update import map
+1. **Update library code (PR = manual work)**
+1. Publish new library version to CDN (CI = automated)
+1. Update import map (CI = automated)
 
 </Appear>
 
@@ -476,6 +477,7 @@ Traditional NPM way:
 1. Run app
 1. Run styleguide
 1. `yarn link` / `npm link` / `yalc link`
+1. Build styleguide so the app sees the change
 
 <br />
 
@@ -517,8 +519,7 @@ Import map way:
 
 <br />
 
-- client-side MFEs
-- using import maps
+Note: _client-side MFEs using import maps_
 
 <!--
   client-side composition of MFEs using import maps... really isn't that strange. or different. is it?
@@ -531,7 +532,29 @@ Import map way:
 
 ---
 
+<img
+  src={mfeTypes}
+  alt="Shows three columns; each column relates to a specific type of 'Microfrontend (MFE) Composition'. Column one is 'Client-Side Composition' and shows MFEs being put together at the client/browser level. Column two shows 'Edge-Side Composition' with MFEs being composed at an Edge/CDN location. Column three shows 'Server-Side composition' with MFEs being assembled at the server/origin."
+/>
+
+<!--
+  Remember, this is just one variant. There are other ways of doing MFEs, even if you're only looking at client-side composition!
+
+  There are lots of other ways to do MFEs on edge-side and server-side!
+-->
+
+---
+
 # single-spa
+
+_A Javascript router for MFEs_
+
+<!--
+  A clients-side router usually just says "when at this route, mount this component"
+  That's what single-spa does! Execpt, we can do it at a higher level: "when at this route, mount this APPLICATION"
+-->
+
+---
 
 ---
 
