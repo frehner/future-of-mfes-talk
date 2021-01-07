@@ -4,7 +4,7 @@
   "description": "A minimal slide deck builder using React and MDX",
   "main": "index.js",
   "scripts": {
-    "build": "parcel build index.html",
+    "build": "parcel build --public-url /future-of-mfes-talk/ index.html",
     "start": "parcel -p 9999 index.html",
     "test": "node e2e/index.test.js --unhandled-rejections=strict"
   },
