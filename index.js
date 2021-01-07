@@ -16,8 +16,6 @@ const Base = (C, classnames) => (props) => (
   <C {...props} className={cls(classnames, props.className)} />
 );
 
-//test
-
 render(
   <MDXProvider
     components={{
