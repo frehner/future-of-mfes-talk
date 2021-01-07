@@ -6,19 +6,19 @@
 - Syncs current slide index to URL
 */
 
-import React, { useCallback, useMemo } from 'react';
-import useLocation from 'wouter/use-location';
+import React, { useCallback, useMemo } from "react";
+import useLocation from "wouter/use-location";
 
-import useEvent from './useEvent';
-import useSwipeEvent from './useSwipeEvent';
-import Slide from './Slide';
+import useEvent from "./useEvent";
+import useSwipeEvent from "./useSwipeEvent";
+import Slide from "./Slide";
 // import ProgressIndicator from './ProgressIndicator';
 
 export default function Deck({ children }) {
   const slides = useMemo(() => {
     const { slides } = React.Children.toArray(children).reduce(
       (slideAccumulator, currentNode) => {
-        if (currentNode.props.mdxType === 'hr') {
+        if (currentNode.props.mdxType === "hr") {
           slideAccumulator.slideIndex += 1;
           slideAccumulator.slides[slideAccumulator.slideIndex] = [];
         } else {
@@ -38,8 +38,9 @@ export default function Deck({ children }) {
 
   const max = slides.length - 1;
   const [location, setLocation] = useLocation();
-  const currentIndex = parseInt(location.split('/').filter((s) => !!s)[0], 10);
-  const setLocationIndex = (i) => setLocation(`/${i}`);
+  const currentIndex = parseInt(location.split("/").filter((s) => !!s)[0], 10);
+  const basePath = location.split("/").splice(-0, 1).join("/");
+  const setLocationIndex = (i) => setLocation(`${basePath}/${i}`);
 
   if (Number.isNaN(currentIndex) || currentIndex < 0) {
     setLocationIndex(0);
@@ -49,11 +50,11 @@ export default function Deck({ children }) {
 
   const handleNavigation = useCallback(
     (e) => {
-      if (e.key === 'ArrowRight') {
+      if (e.key === "ArrowRight") {
         const nextOrMax = Math.min(currentIndex + 1, max);
         setLocationIndex(nextOrMax);
       }
-      if (e.key === 'ArrowLeft') {
+      if (e.key === "ArrowLeft") {
         const prevOrMin = Math.max(currentIndex - 1, 0);
         setLocationIndex(prevOrMin);
       }
@@ -61,7 +62,7 @@ export default function Deck({ children }) {
     [currentIndex, slides]
   );
 
-  useEvent('keydown', handleNavigation);
+  useEvent("keydown", handleNavigation);
 
   const swipeEvents = useMemo(() => {
     return {
