@@ -38,10 +38,10 @@ export default function Deck({ children }) {
 
   const max = slides.length - 1;
   const [location, setLocation] = useLocation();
-  const currentIndex = parseInt(location.split("/").filter((s) => !!s)[0], 10);
   const pathArr = location.split("/");
-  pathArr.pop();
+  const finalPath = pathArr.pop();
   const basePath = pathArr.join("/");
+  const currentIndex = parseInt(finalPath ?? 0);
   const setLocationIndex = (i) => setLocation(`${basePath}/${i}`);
 
   if (Number.isNaN(currentIndex) || currentIndex < 0) {
