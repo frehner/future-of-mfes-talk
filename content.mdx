@@ -474,9 +474,9 @@ Import map way:
 
 Traditional NPM way:
 
-1. Run app
 1. Run styleguide
 1. `yarn link` / `npm link` / `yalc link`
+1. Run app
 1. Build styleguide so the app sees the change
 
 <br />
@@ -549,6 +549,8 @@ Note: _client-side MFEs using import maps_
 
 _A Javascript router for MFEs_
 
+<br />
+
 <!--
   A clients-side router usually just says "when at this route, mount this component"
   That's what single-spa does! Execpt, we can do it at a higher level: "when at this route, mount this APPLICATION"
@@ -556,8 +558,73 @@ _A Javascript router for MFEs_
 
 ---
 
+# Docs
+
+<a href="https://single-spa.js.org" target="_blank">
+  single-spa.js.org
+</a>
+
 ---
 
-## Thanks!
+# Example
+
+<a href="https://vue.microfrontends.app/rate-doggos" target="_blank">
+  Vue only project
+</a>
+
+<!--
+  A chance to see single-spa and import-maps (through SystemJS) in action. Navigate around and notice that it appears normal
+  But! look at the source code - there is a styleguide, the navbar, the dashboard, and the rate-dogs MFEs! All independently deployable.
+  and communicating nicely, and behaving nicely, and sharing dependencies (like the Vue library) so it's only downloaded once.
+
+  back on the website, we can even open the devtools and see how easy it is to write an override for a single MFE, so that the others continue to work
+  and we don't have to run them locally
+-->
+
+---
+
+# What else is it good for?
+
+<br />
+
+Migrating _away_ from legacy codebases
+
+<!--
+  if you have a legacy codebase, and that legacy code is what is generating revenue and keeping people happy, then it's a hard sell to say "let's nuke the whole thing"
+  at the same time, it may be holding your team's velocity back, or may be in a framework or technology that you just can't support well anymore (for various reasons)
+
+  so don't rewrite it!
+
+  write new features in a new codebase that has the good stuff. use single-spa to "mount the old app at all locations, except this one"
+  then have the new app only be mounted in that new location
+
+  you can now start doing what's called...
+-->
+
+---
+
+# The strangler pattern
+
+<!--
+  That's just a... probably bad term for saying, you don't HAVE to rewrite your whole app at once.
+  Write new stuff in the better way. Gradually, your old legacy code will start to do less and less, as new code in the new way replaces the old stuff
+
+  eventually, you're on all new code - and you never had to go through a 2-year full-app rewrite. your old app generated value while your new code increased velocity.
+-->
+
+---
+
+## ...and that's it
+
+<!--
+  That's all I really have to say for the moment
+
+  if there's only one thing you learned from this talk, I hope it's actually import-maps and how exciting they are. single-spa is just fun, but I love "using the platform"!
+  and seeing it get better
+-->
+
+---
+
+## Thanks
 
 [Back to beginning](/0)
